@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <form action="/operation" method="GET">
+        <select name="service_name">
+            {% for name in service_names %}
+                {% if name == selected %}
+                    <option value="{{ name }}" selected>{{ name }}</option>
+                {% else %}
+                    <option value="{{ name }}" >{{ name }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <select name="operation">
+            <option value="status">STATUS</option>
+            <option value="stop">STOP</option>
+            <option value="start">START</option>
+            <option value="restart">RESTART</option>
+            <option value="enable">ENABLE</option>
+            <option value="disable">DISABLE</option>
+        </select>
+        <input type="submit" value="execute">
+    </form>
+    <p>
+        {% for line in operationResult %}
+        <p>{{ line }}</p>
+        {% endfor %}
+    </p>
+</body>
+
+</html>

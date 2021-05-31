@@ -1,0 +1,5 @@
+operes
+servicelist
+__pycache__/*
+.vscode/*
+env/*
