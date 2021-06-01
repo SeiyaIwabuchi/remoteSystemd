@@ -23,6 +23,8 @@ def operation():
     serviceName = request.args.get("service_name")
     ope = request.args.get("operation")
     os.system("systemctl {} {} > operes".format(ope,serviceName))
+    if ope != "status":
+        os.system("systemctl status {} >> operes".format(serviceName))
     with open("operes","r") as f:
         operationResult = f.read().split("\n")
     return render_template(
@@ -33,4 +35,4 @@ def operation():
         )
 ## おまじない
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")
