@@ -7,7 +7,7 @@
 
 <body>
     <form action="/operation" method="GET">
-        <select name="service_name">
+        <select name="service_name" id="service_name">
             {% for name in service_names %}
                 {% if name == selected %}
                     <option value="{{ name }}" selected>{{ name }}</option>
@@ -16,7 +16,7 @@
                 {% endif %}
             {% endfor %}
         </select>
-        <select name="operation">
+        <select name="operation" id="operation">
             <option value="status">STATUS</option>
             <option value="stop">STOP</option>
             <option value="start">START</option>
@@ -26,11 +26,39 @@
         </select>
         <input type="submit" value="execute">
     </form>
+    <p id="command"></p>
     <p>
         {% for line in operationResult %}
         <p>{{ line }}</p>
         {% endfor %}
     </p>
+    <script>
+        let comele = document.getElementById("command");
+        let service_name =
+            document.getElementById("service_name")
+            .options[document.getElementById("service_name").selectedIndex].value;
+
+        let operation =
+            document.getElementById("operation")
+            .options[document.getElementById("operation").selectedIndex].value;
+
+        comele.innerText = `systemctl ${operation} ${service_name}`;
+
+        document.getElementById("service_name")
+            .addEventListener("change", (event) => {
+                service_name = event.target.value;
+                comele.innerText = `systemctl ${operation} ${service_name}`;
+            });
+
+        document.getElementById("operation")
+            .addEventListener("change", (event) => {
+                operation = event.target.value;
+                comele.innerText = `systemctl ${operation} ${service_name}`;
+            });
+        let commandUpdate = () => {
+            comele.innerText = `systemctl ${operation} ${service_name}`;
+        };
+    </script>
 </body>
 
 </html>
